@@ -1,0 +1,39 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  TF_SA: <GOOGLE_SA_EMAIL>
+  TERRAFORM_VERSION: "1.2.9"
+  TF_IN_AUTOMATION: "True"
+
+jobs:
+  terraform_plan:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    # if: github.event.review.state != 'approved'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3.1.1
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
