@@ -27,6 +27,8 @@ jobs:
 
       - name: Terraform Init
         id: init
+        env:
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
         run: terraform init
       
       - name: Terraform Validate
@@ -35,6 +37,8 @@ jobs:
       
       - name: Terraform Plan
         id: plan
+        env:
+          ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
         run: terraform plan -no-color
         continue-on-error: true
 
