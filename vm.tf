@@ -7,7 +7,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "terraform-rg"
-    storage_account_name = "knudsenstorage"
+    storage_account_name = "knuterraformstate"
     container_name       = "terraformstate"
     key                  = "homelab.tfstate"
   }
